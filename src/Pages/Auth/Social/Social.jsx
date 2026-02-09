@@ -24,7 +24,7 @@ const Social = () => {
                     photoUrl: result.user.photoURL
                 }
 
-                axiosSecure.post('users', userInfo)
+                axiosSecure.post('/users', userInfo)
                     .then(res => {
                         console.log('user data has been stored', res.data);
                         const redirectPath = location.state?.from || '/';

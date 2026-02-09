@@ -63,12 +63,15 @@ const Register = () => {
                         };
 
                         axiosSecure.post('/users', userInfo)
-                        updateUserProfile({
-                            displayName: data.name,
-                            photoUrl
-                        }).then(() => {
-                            navigate(location?.state || '/');
-                        });
+                            .then(() => {
+                                updateUserProfile({
+                                    displayName: data.name,
+                                    photoUrl
+                                }).then(() => {
+                                    navigate(location?.state || '/');
+                                });
+                            });
+
 
                     });
             })

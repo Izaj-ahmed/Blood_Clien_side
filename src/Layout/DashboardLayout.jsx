@@ -98,12 +98,12 @@ const DashboardLayout = () => {
                                         </NavLink>
                                     </li>
 
-                                    <li>
+                                    {/* <li>
                                         <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Assign Donar" to={'/dashboard/assign-riders'}><RiEBikeFill className="my-1.5 inline-block size-4" />
                                             <span className="is-drawer-close:hidden">
                                                 Assign Donar</span>
                                         </NavLink>
-                                    </li>
+                                    </li> */}
                                     <li>
                                         <NavLink to="/dashboard/manage-volunteers" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Volunteers">
                                             <FaUser className="my-1.5 inline-block size-4" />

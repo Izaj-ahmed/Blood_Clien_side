@@ -77,6 +77,19 @@ const DashboardLayout = () => {
                                         </NavLink>
                                     </li>
 
+                                    <li>
+                                        <NavLink
+                                            to="/dashboard/all-blood-donation-request"
+                                            className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                                            data-tip="All Blood Requests"
+                                        >
+                                            <FaTasks className="my-1.5 inline-block size-4" />
+                                            <span className="is-drawer-close:hidden">
+                                                All Blood Donation Requests
+                                            </span>
+                                        </NavLink>
+                                    </li>
+
                                     {/* <li>
                                         <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Completed Deliveries" to={'/dashboard/completed-deliveries'}><SiGoogletasks className="my-1.5 inline-block size-4" />
                                             <span className="is-drawer-close:hidden">

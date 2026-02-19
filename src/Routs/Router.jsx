@@ -25,6 +25,8 @@ import BeAVolunteer from "../Pages/Dashboard/BeAVolunteer/BeAVolunteer";
 import VolunteerAssignedRequests from "../Pages/Dashboard/AssignedDelivery/VolunteerAssignedRequests";
 import ManageVolunteers from "../Pages/Dashboard/ManageVolunteers/ManageVolunteers";
 import DonationRequests from "../Pages/DonationRequests/DonationRequests";
+import VolunteerRoutes from "./VolunteerRoutes";
+import VolunteerAllBloodRequest from "../Pages/VolunteerAllBloodRequest/VolunteerAllBloodRequest";
 
 export const router = createBrowserRouter([
   {
@@ -106,21 +108,25 @@ export const router = createBrowserRouter([
         Component: MyDonationStatus
       },
 
-      // Rider only routes
+      // Volunteer only routes
 
       {
         path: 'volunteer-requests',
         element: (
-          <RiderRoutes>
-            <VolunteerAssignedRequests></VolunteerAssignedRequests>
-          </RiderRoutes>
+          
+            <VolunteerRoutes><VolunteerAssignedRequests></VolunteerAssignedRequests></VolunteerRoutes>
+          
         )
-      }
-      ,
-      {
-        path: 'completed-deliveries',
-        element: <RiderRoutes><CompletedDeliveries></CompletedDeliveries></RiderRoutes>
       },
+      {
+        path: "all-blood-donation-request",
+        element: (
+          <VolunteerRoutes>
+            <VolunteerAllBloodRequest></VolunteerAllBloodRequest>
+          </VolunteerRoutes>
+        ),
+      },
+      
 
       // Admin routes
       {
@@ -130,11 +136,6 @@ export const router = createBrowserRouter([
       {
         path: 'manage-volunteers',
         element: <AdminRoute><ManageVolunteers></ManageVolunteers></AdminRoute>
-      },
-
-      {
-        path: 'assign-riders',
-        element: <AdminRoute><AssignRider></AssignRider></AdminRoute>
       },
       {
         path: 'users-management',

@@ -1,20 +1,20 @@
-import React from 'react';
-import UseAuth from '../Hooks/UseAuth';
-import UseRoles from '../Hooks/UseRoles';
-import Loading from '../Loading/Loading';
-import Forbidden from '../Components/Forbidden';
+import { Navigate } from "react-router";
+import UseAuth from "../Hooks/UseAuth";
+import UseRoles from "../Hooks/UseRoles";
 
 const VolunteerRoutes = ({ children }) => {
   const { user, loading } = UseAuth();
   const { role, roleLoading } = UseRoles();
 
-  if (loading || roleLoading) return <Loading></Loading>;
-
-  if (!user || role !== 'volunteer') {
-    return <Forbidden></Forbidden>;
+  if (loading || roleLoading) {
+    return <div className="text-center mt-10">Loading...</div>;
   }
 
-  return children;
+  if (user && role === 'volunteer') {
+    return children;
+  }
+
+  return <Navigate to="/login" replace />;
 };
 
 export default VolunteerRoutes;

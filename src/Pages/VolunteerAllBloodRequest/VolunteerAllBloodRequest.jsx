@@ -68,14 +68,16 @@ const VolunteerAllBloodRequest = () => {
                                 <td>{req.requestDistrict}</td>
                                 <td className="capitalize">{req.status}</td>
                                 <td>
-                                    {req.status !== 'completed' ? (
+                                    {req.status === 'approved' && (
                                         <button
                                             className="btn btn-sm btn-success"
                                             onClick={() => handleStatusUpdate(req._id, 'completed')}
                                         >
                                             Mark Completed
                                         </button>
-                                    ) : (
+                                    )}
+
+                                    {req.status === 'completed' && (
                                         <span className="text-green-600 font-semibold">Completed</span>
                                     )}
 

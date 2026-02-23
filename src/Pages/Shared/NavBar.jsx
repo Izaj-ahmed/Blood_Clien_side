@@ -18,12 +18,12 @@ const NavBar = () => {
     const links = <>
         <li><NavLink to={'/'}>Home</NavLink></li>
         <li><NavLink to={'/donation-requests'}>Donation Requests</NavLink></li>
-        <li><NavLink to={'/rider'}>Funding</NavLink></li>
-        <li><NavLink to={'/coverage'}> Coverage</NavLink></li>
+        <li><NavLink to={'/fundings'}>Funding</NavLink></li>
+        {/* <li><NavLink to={'/coverage'}> Coverage</NavLink></li> */}
 
         {
             user && <>
-                <li><NavLink to={'/dashboard/my-parcels'}>My Requests</NavLink></li>
+                
                 <li><NavLink to={'/dashboard/be-volunteer'}>Be a Volunteer</NavLink></li>
 
             </>

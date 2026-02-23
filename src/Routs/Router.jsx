@@ -1,32 +1,33 @@
 import { createBrowserRouter } from "react-router";
 import RootLayout from "../Layout/RootLayout";
 import Home from "../Pages/Home/Home";
-import Coverage from "../Pages/Coverage/Coverage";
 import AuthLayout from "../Layout/AuthLayout";
 import Login from "../Pages/Auth/Login/Login";
 import Register from "../Pages/Auth/Register/Register";
 import PrivateRouter from "./PrivateRouter";
 import DashboardLayout from "../Layout/DashboardLayout";
-import Payment from "../Pages/Dashboard/Payment/Payment";
+
+// Dashboard Pages
+import DashboardHome from "../Pages/Dashboard/DashboardHome/DashboardHome";
+import UserManagement from "../Pages/Dashboard/UserManagement/UserManagement";
+
+// Admin Components
+import ManageVolunteers from "../Pages/Dashboard/ManageVolunteers/ManageVolunteers";
+
+// Routes Guards
+import AdminRoute from "./AdminRoute";
+import Profile from "../Pages/Dashboard/Profile/Profile";
+import MyDonations from "../Pages/Dashboard/MyParcels/MyDonations";
+import VolunteerAllBloodRequest from "../Pages/VolunteerAllBloodRequest/VolunteerAllBloodRequest";
+import ManageDonationRequests from "../Pages/Dashboard/ApproveRiders/ManageDonationRequests";
+import DonorRoute from "./DonorRoute";
+import Funding from "../Pages/Rider/Funding";
+import BeAVolunteer from "../Pages/Dashboard/BeAVolunteer/BeAVolunteer";
+import DonationRequests from "../Pages/DonationRequests/DonationRequests";
 import PaymentSuccess from "../Pages/Dashboard/Payment/PaymentSuccess";
 import PaymentCancel from "../Pages/Dashboard/Payment/PaymentCancel";
-import ApproveRiders from "../Pages/Dashboard/ApproveRiders/ManageDonationRequests";
-import UserManagement from "../Pages/Dashboard/UserManagement/UserManagement";
-import AdminRoute from "./AdminRoute";
-import AssignRider from "../Pages/Dashboard/AssignRider/AssignRider";
-import RiderRoutes from "./VolunteerRoutes";
-import CompletedDeliveries from "../Pages/Dashboard/CompletedDeliveries/CompletedDeliveries";
-import PercelsTrack from "../Pages/PercelsTrack/PercelsTrack";
-import DashboardHome from "../Pages/Dashboard/DashboardHome/DashboardHome";
-import Funding from "../Pages/Rider/Funding";
-import MyDonations from "../Pages/Dashboard/MyParcels/MyDonations";
 import MyDonationStatus from "../Pages/Dashboard/PaymentHistory/MyDonationStatus";
-import BeAVolunteer from "../Pages/Dashboard/BeAVolunteer/BeAVolunteer";
-import VolunteerAssignedRequests from "../Pages/Dashboard/AssignedDelivery/VolunteerAssignedRequests";
-import ManageVolunteers from "../Pages/Dashboard/ManageVolunteers/ManageVolunteers";
-import DonationRequests from "../Pages/DonationRequests/DonationRequests";
-import VolunteerRoutes from "./VolunteerRoutes";
-import VolunteerAllBloodRequest from "../Pages/VolunteerAllBloodRequest/VolunteerAllBloodRequest";
+
 
 export const router = createBrowserRouter([
   {
@@ -38,29 +39,23 @@ export const router = createBrowserRouter([
         Component: Home
       },
       {
-        path: 'coverage',
-        Component: Coverage,
-        loader: () => fetch('servicecenter.json').then(res => res.json())
-      },
-      {
-        path: 'rider',
+        path:'fundings',
         element:<Funding></Funding>,
-        loader: () => fetch('servicecenter.json').then(res => res.json())
+        loader: () => fetch('/servicecenter.json').then(res => res.json())
       },
       {
         path: '/dashboard/be-volunteer',
         element: <PrivateRouter><BeAVolunteer></BeAVolunteer></PrivateRouter>,
-        loader: () => fetch('servicecenter.json').then(res => res.json())
+        loader: () => fetch('/servicecenter.json').then(res => res.json())
       },
-
       {
         path: 'donation-requests',
-        element: <DonationRequests></DonationRequests>,
-        loader: () => fetch('servicecenter.json').then(res => res.json())
+        element:  <DonorRoute><DonationRequests></DonationRequests></DonorRoute>,
+        loader: () => fetch('/servicecenter.json').then(res => res.json())
       },
       {
-        path: 'parcel-track/:trackingId',
-        Component: PercelsTrack
+        path: 'donation-request/:id',
+        element: <PrivateRouter><ManageDonationRequests/></PrivateRouter> // You need to create this
       }
     ]
   },
@@ -74,8 +69,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'register',
-        Component: Register,
-        loader: () => fetch('servicecenter.json').then(res => res.json())
+        Component: Register
       }
     ]
   },
@@ -83,17 +77,14 @@ export const router = createBrowserRouter([
     path: 'dashboard',
     element: <PrivateRouter><DashboardLayout></DashboardLayout></PrivateRouter>,
     children: [
+      // Common routes for ALL users
       {
         index: true,
         Component: DashboardHome
       },
       {
-        path: 'my-parcels',
-        Component: MyDonations,
-      },
-      {
-        path: 'payment/:parcelId',
-        Component: Payment
+        path: 'profile',
+        Component: Profile 
       },
       {
         path: 'payment-success',
@@ -107,42 +98,29 @@ export const router = createBrowserRouter([
         path: 'payment-history',
         Component: MyDonationStatus
       },
-
-      // Volunteer only routes
-
+      
+      // Donor only routes
+      
       {
-        path: 'volunteer-requests',
-        element: (
-          
-            <VolunteerRoutes><VolunteerAssignedRequests></VolunteerAssignedRequests></VolunteerRoutes>
-          
-        )
-      },
-      {
-        path: "all-blood-donation-request",
-        element: (
-          <VolunteerRoutes>
-            <VolunteerAllBloodRequest></VolunteerAllBloodRequest>
-          </VolunteerRoutes>
-        ),
+        path: 'my-donation-requests',
+        element: <DonorRoute><MyDonations /></DonorRoute>
       },
       
-
-      // Admin routes
+      // Admin & Volunteer shared route (but with different permissions inside the component)
       {
-        path: 'approve-riders',
-        element: <AdminRoute><ApproveRiders></ApproveRiders></AdminRoute>
+        path: 'all-blood-donation-request',
+        element: <VolunteerAllBloodRequest /> // Component will check role internally
+      },
+      
+      // Admin only routes
+      {
+        path: 'all-users',
+        element: <AdminRoute><UserManagement /></AdminRoute>
       },
       {
         path: 'manage-volunteers',
-        element: <AdminRoute><ManageVolunteers></ManageVolunteers></AdminRoute>
-      },
-      {
-        path: 'users-management',
-        element: <AdminRoute><UserManagement></UserManagement></AdminRoute>
+        element: <AdminRoute><ManageVolunteers /></AdminRoute>
       }
     ]
-
   }
 ]);
-

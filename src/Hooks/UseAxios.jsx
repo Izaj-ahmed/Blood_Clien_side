@@ -3,7 +3,7 @@ import React from 'react';
 
 
 const axiosInstance = axios.create({
-    baseURL : 'https://blooddonation-gold.vercel.app'
+    baseURL : 'https://blooddonation-gold.vercel.app/'
 })
 
 const UseAxios = () => {

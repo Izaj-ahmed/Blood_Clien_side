@@ -2,8 +2,8 @@ import React from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { useLoaderData, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
-import UseAxiosSecure from '../../Hooks/UseAxiosSecure';
-import UseAuth from '../../Hooks/UseAuth';
+import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
+import UseAuth from '../../../Hooks/UseAuth';
 
 const DonationRequests = () => {
 
@@ -37,7 +37,7 @@ const DonationRequests = () => {
                         timer: 1500,
                         showConfirmButton: false
                     });
-                    navigate('/dashboard');
+                    navigate('/dashboard/payment-history');
 
                 }
             });

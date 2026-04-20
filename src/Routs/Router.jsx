@@ -3,7 +3,6 @@ import RootLayout from "../Layout/RootLayout";
 import Home from "../Pages/Home/Home";
 import AuthLayout from "../Layout/AuthLayout";
 import Login from "../Pages/Auth/Login/Login";
-import Register from "../Pages/Auth/Register/Register";
 import PrivateRouter from "./PrivateRouter";
 import DashboardLayout from "../Layout/DashboardLayout";
 
@@ -24,9 +23,12 @@ import DonorRoute from "./DonorRoute";
 import Funding from "../Pages/Rider/Funding";
 import BeAVolunteer from "../Pages/Dashboard/BeAVolunteer/BeAVolunteer";
 import DonationRequests from "../Pages/DonationRequests/DonationRequests";
+import CreateDonationRequest from "../Pages/Dashboard/CreateDonationRequest/CreateDonationRequest";
 import PaymentSuccess from "../Pages/Dashboard/Payment/PaymentSuccess";
 import PaymentCancel from "../Pages/Dashboard/Payment/PaymentCancel";
 import MyDonationStatus from "../Pages/Dashboard/PaymentHistory/MyDonationStatus";
+import Register from "../Pages/Auth/Register/Register";
+import SearchDonors from "../Pages/SearchDonors/SearchDonors";
 
 
 export const router = createBrowserRouter([
@@ -54,6 +56,11 @@ export const router = createBrowserRouter([
         loader: () => fetch('/servicecenter.json').then(res => res.json())
       },
       {
+        path: 'search-donors',
+        Component: SearchDonors,
+        loader: () => fetch('/servicecenter.json').then(res => res.json())
+      },
+      {
         path: 'donation-request/:id',
         element: <PrivateRouter><ManageDonationRequests/></PrivateRouter> // You need to create this
       }
@@ -69,7 +76,8 @@ export const router = createBrowserRouter([
       },
       {
         path: 'register',
-        Component: Register
+        Component: Register,
+        loader: () => fetch('/servicecenter.json').then(res => res.json())
       }
     ]
   },
@@ -104,6 +112,11 @@ export const router = createBrowserRouter([
       {
         path: 'my-donation-requests',
         element: <DonorRoute><MyDonations /></DonorRoute>
+      },
+      {
+        path: 'create-donation-request',
+        element: <DonorRoute><CreateDonationRequest /></DonorRoute>,
+        loader: () => fetch('/servicecenter.json').then(res => res.json())
       },
       
       // Admin & Volunteer shared route (but with different permissions inside the component)

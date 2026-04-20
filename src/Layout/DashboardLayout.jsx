@@ -68,7 +68,12 @@ const DashboardLayout = () => {
                             {/* Donor Routes */}
                             {(role === 'donor' || role === 'admin') && (
                                 <>
-                                    
+                                    <li>
+                                        <NavLink to="/dashboard/create-donation-request" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Create Request">
+                                            <FaPlusCircle className="my-1.5 inline-block size-4" />
+                                            <span className="is-drawer-close:hidden">Create Request</span>
+                                        </NavLink>
+                                    </li>
                                     
                                     <li>
                                         <NavLink to="/dashboard/my-donation-requests" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Requests">

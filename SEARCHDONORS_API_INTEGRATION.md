@@ -102,7 +102,7 @@ const { data: searchResults = [], isLoading } = useQuery({
 
 **Request:**
 ```
-GET http://localhost:3000/search-donors?bloodGroup=A+&region=Dhaka
+GET https://blooddonation-gold.vercel.app/search-donors?bloodGroup=A+&region=Dhaka
 ```
 
 **Response (200 OK):**

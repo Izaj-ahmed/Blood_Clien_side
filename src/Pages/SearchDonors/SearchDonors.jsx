@@ -29,15 +29,26 @@ const SearchDonors = () => {
             try {
                 // Build query string from search parameters
                 const queryParams = new URLSearchParams();
-                if (searchParams.bloodGroup) queryParams.append('bloodGroup', searchParams.bloodGroup);
-                if (searchParams.region) queryParams.append('region', searchParams.region);
-                if (searchParams.district) queryParams.append('district', searchParams.district);
+                if (searchParams.bloodGroup?.trim()) queryParams.append('bloodGroup', searchParams.bloodGroup.trim());
+                if (searchParams.region?.trim()) queryParams.append('region', searchParams.region.trim());
+                if (searchParams.district?.trim()) queryParams.append('district', searchParams.district.trim());
+                
+                console.log('Frontend search request:', {
+                    bloodGroup: searchParams.bloodGroup,
+                    region: searchParams.region,
+                    district: searchParams.district,
+                    queryString: queryParams.toString()
+                });
                 
                 // Call backend API with filters
                 const res = await axiosSecure.get(`/search-donors?${queryParams.toString()}`);
+                
+                console.log('Frontend received donors:', res.data);
+                
                 return res.data || [];
             } catch (error) {
                 console.error('Error fetching donors:', error);
+                alert(`Error searching donors: ${error.response?.data?.message || error.message}`);
                 return [];
             }
         }
@@ -45,11 +56,22 @@ const SearchDonors = () => {
 
     const handleSearch = (data) => {
         setCurrentPage(1);
-        setSearchParams({
-            bloodGroup: data.bloodGroup || '',
-            region: data.searchRegion || '',
-            district: data.searchDistrict || ''
-        });
+        
+        // Ensure all parameters are trimmed and valid
+        const cleanedParams = {
+            bloodGroup: (data.bloodGroup || '').trim(),
+            region: (data.searchRegion || '').trim(),
+            district: (data.searchDistrict || '').trim()
+        };
+        
+        // Require at least one filter
+        if (!cleanedParams.bloodGroup && !cleanedParams.region && !cleanedParams.district) {
+            alert('Please select at least one filter (Blood Group, Region, or District)');
+            return;
+        }
+        
+        console.log('handleSearch called with:', cleanedParams);
+        setSearchParams(cleanedParams);
     };
 
     const handleReset = () => {
@@ -151,7 +173,7 @@ const SearchDonors = () => {
                                         <div key={donor._id} className='card bg-base-100 shadow-md hover:shadow-lg transition'>
                                             <div className='card-body'>
                                                 <h3 className='card-title text-lg'>
-                                                    {donor.name || 'Anonymous Donor'}
+                                                    {donor.name || 'Donor Name Unavailable'}
                                                 </h3>
 
                                                 <div className='space-y-2 text-sm'>
